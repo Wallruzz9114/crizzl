@@ -1,0 +1,44 @@
+.vscode
+
+backend/.vscode
+backend/API/bin
+backend/API/obj
+backend/API/Logs
+backend/API/Properties
+backend/API/appsettings.Development.json
+backend/API/appsettings.json
+backend/Core/bin
+backend/Core/obj
+backend/Data/bin
+backend/Data/obj
+backend/Data/Migrations
+backend/node_modules/bin
+backend/Models/obj
+backend/.DS_Store
+backend/API/dump.rdb
+backend/.DS_Store
+backend/Makefile
+
+frontend/website/node_modules
+frontend/website/.pnp
+frontend/website/.pnp.js
+# testing
+frontend/website/coverage
+
+# production
+frontend/website/build
+
+# misc
+frontend/website/.DS_Store
+frontend/website/.env.local
+frontend/website/.env.development.local
+frontend/website/.env.test.local
+frontend/website/.env.production.local
+
+frontend/website/.eslintrc
+frontend/website/.eslintignore
+frontend/website/.prettierrc
+
+frontend/website/npm-debug.log*
+frontend/website/yarn-debug.log*
+frontend/website/yarn-error.log*
