@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Crizzl.Application.Interfaces;
-using Crizzl.Domain.ViewModels;
 using Crizzl.Infrastructure.Contexts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +12,11 @@ namespace Crizzl.Infrastructure.Features.Users.Commands
     {
         public class Command : IRequest
         {
-            public UserUpdateParameters UserUpdateParameters { get; set; }
+            public string Bio { get; set; }
+            public string DatingTarget { get; set; }
+            public string Interests { get; set; }
+            public string City { get; set; }
+            public string Country { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -31,11 +34,11 @@ namespace Crizzl.Infrastructure.Features.Users.Commands
             {
                 var user = await _databaseContext.Users.SingleOrDefaultAsync(x => x.Username == _userService.GetCurrentUsername(), cancellationToken: cancellationToken);
 
-                user.Bio = command.UserUpdateParameters.Bio ?? user.Bio;
-                user.DatingTarget = command.UserUpdateParameters.DatingTarget ?? user.Bio;
-                user.Interests = command.UserUpdateParameters.Interests ?? user.Bio;
-                user.City = command.UserUpdateParameters.City ?? user.Bio;
-                user.Country = command.UserUpdateParameters.Country ?? user.Bio;
+                user.Bio = command.Bio ?? user.Bio;
+                user.DatingTarget = command.DatingTarget ?? user.Bio;
+                user.Interests = command.Interests ?? user.Bio;
+                user.City = command.City ?? user.Bio;
+                user.Country = command.Country ?? user.Bio;
 
                 var updateIsSuccessful = await _databaseContext.SaveChangesAsync(cancellationToken) > 0;
 

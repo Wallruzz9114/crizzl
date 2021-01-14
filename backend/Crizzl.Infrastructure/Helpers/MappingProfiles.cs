@@ -22,7 +22,6 @@ namespace Crizzl.Infrastructure.Helpers
             CreateMap<Photo, PhotoDetails>();
             CreateMap<Photo, PhotoDetails>();
             CreateMap<FileParameters, Photo>();
-            CreateMap<UserParameters, User>();
         }
     }
 }

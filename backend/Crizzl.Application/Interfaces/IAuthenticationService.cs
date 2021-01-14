@@ -6,7 +6,7 @@ namespace Crizzl.Application.Interfaces
     public interface IAuthenticationService
     {
         Task<bool> UserExists(string username);
-        bool PasswordIsHashed(string password, byte[] passwordHash, byte[] passwordSalt);
+        bool CorrectPassword(string password, byte[] passwordHash, byte[] passwordSalt);
         string CreateToken(User user);
     }
 }

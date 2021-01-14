@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Crizzl.Domain.DTOs.User;
 using Crizzl.Domain.Entities;
-using Crizzl.Domain.ViewModels;
 using Crizzl.Infrastructure.Contexts;
 using Crizzl.Infrastructure.Helpers;
 using FluentValidation;
@@ -17,21 +16,28 @@ namespace Crizzl.Infrastructure.Features.Users.Commands
     {
         public class Command : IRequest<UserDetailsForListDTO>
         {
-            public UserParameters UserParameters { get; set; }
+            public string Username { get; set; }
+            public string Email { get; set; }
+            public string Password { get; set; }
+            public string Gender { get; set; }
+            public string Alias { get; set; }
+            public DateTime DateOfBirth { get; set; }
+            public string City { get; set; }
+            public string Country { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.UserParameters.Username).NotEmpty();
-                RuleFor(x => x.UserParameters.Email).NotEmpty().EmailAddress();
-                RuleFor(x => x.UserParameters.Password).Password();
-                RuleFor(x => x.UserParameters.Gender).NotEmpty();
-                RuleFor(x => x.UserParameters.Alias).NotEmpty();
-                RuleFor(x => x.UserParameters.DateOfBirth).NotEmpty();
-                RuleFor(x => x.UserParameters.City).NotEmpty();
-                RuleFor(x => x.UserParameters.Country).NotEmpty();
+                RuleFor(x => x.Username).NotEmpty();
+                RuleFor(x => x.Email).NotEmpty().EmailAddress();
+                RuleFor(x => x.Password).Password();
+                RuleFor(x => x.Gender).NotEmpty();
+                RuleFor(x => x.Alias).NotEmpty();
+                RuleFor(x => x.DateOfBirth).NotEmpty();
+                RuleFor(x => x.City).NotEmpty();
+                RuleFor(x => x.Country).NotEmpty();
             }
         }
 
@@ -48,27 +54,27 @@ namespace Crizzl.Infrastructure.Features.Users.Commands
 
             public async Task<UserDetailsForListDTO> Handle(Command command, CancellationToken cancellationToken)
             {
-                if (await _databaseContext.Users.AnyAsync(x => x.Email == command.UserParameters.Email, CancellationToken.None))
-                    throw new Exception($"No Accounts Registered with { command.UserParameters.Email }.");
+                if (await _databaseContext.Users.AnyAsync(x => x.Email == command.Email, CancellationToken.None))
+                    throw new Exception($"No Accounts Registered with { command.Email }.");
 
-                if (await _databaseContext.Users.AnyAsync(x => x.Username == command.UserParameters.Username, CancellationToken.None))
-                    throw new Exception($"Username { command.UserParameters.Username } already in use.");
+                if (await _databaseContext.Users.AnyAsync(x => x.Username == command.Username, CancellationToken.None))
+                    throw new Exception($"Username { command.Username } already in use.");
 
-                PasswordHasher.GeneratePasswordHash(command.UserParameters.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                PasswordHasher.GeneratePasswordHash(command.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
                 var newUser = new User
                 {
-                    Username = command.UserParameters.Username,
+                    Username = command.Username,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
-                    Email = command.UserParameters.Email,
-                    Gender = command.UserParameters.Gender,
-                    DateOfBirth = command.UserParameters.DateOfBirth,
-                    Alias = command.UserParameters.Alias,
-                    CreatedAt = command.UserParameters.CreatedAt,
-                    LastActive = command.UserParameters.LastActive,
-                    City = command.UserParameters.City,
-                    Country = command.UserParameters.Country
+                    Email = command.Email,
+                    Gender = command.Gender,
+                    DateOfBirth = command.DateOfBirth,
+                    Alias = command.Alias,
+                    CreatedAt = DateTime.Now,
+                    LastActive = DateTime.Now,
+                    City = command.City,
+                    Country = command.Country
                 };
 
                 await _databaseContext.Users.AddAsync(newUser, cancellationToken);

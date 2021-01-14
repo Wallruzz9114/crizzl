@@ -28,7 +28,7 @@ namespace Crizzl.Infrastructure.Implementations
         public async Task<bool> UserExists(string username) =>
             await _databaseContext.Users.AnyAsync(x => x.Username == username);
 
-        public bool PasswordIsHashed(string password, byte[] passwordHash, byte[] passwordSalt)
+        public bool CorrectPassword(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using var hmac = new HMACSHA512(passwordSalt);
             var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));

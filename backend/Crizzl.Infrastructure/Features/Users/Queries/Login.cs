@@ -16,15 +16,16 @@ namespace Crizzl.Infrastructure.Features.Users.Queries
     {
         public class Query : IRequest<AuthenticationResponse>
         {
-            public LoginParameters LoginParameters { get; set; }
+            public string Username { get; set; }
+            public string Password { get; set; }
         }
 
         public class QueryValidator : AbstractValidator<Query>
         {
             public QueryValidator()
             {
-                RuleFor(x => x.LoginParameters.Username).NotEmpty();
-                RuleFor(x => x.LoginParameters.Password).NotEmpty();
+                RuleFor(x => x.Username).NotEmpty();
+                RuleFor(x => x.Password).NotEmpty();
             }
         }
 
@@ -43,9 +44,13 @@ namespace Crizzl.Infrastructure.Features.Users.Queries
 
             public async Task<AuthenticationResponse> Handle(Query query, CancellationToken cancellationToken)
             {
-                var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Username == query.LoginParameters.Username, cancellationToken: cancellationToken);
+                var user = await _databaseContext.Users.FirstOrDefaultAsync(x => x.Username == query.Username.ToLower(), cancellationToken: cancellationToken);
 
                 if (user == null) throw new Exception($"Could not find user: { user.Username }");
+
+                var correctPassword = _authenticationService.CorrectPassword(query.Password, user.PasswordHash, user.PasswordSalt);
+
+                if (!correctPassword) return null;
 
                 var authenticationResponse = new AuthenticationResponse
                 {
