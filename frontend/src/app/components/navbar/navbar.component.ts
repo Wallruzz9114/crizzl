@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt/lib/jwthelper.service';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { AlertifyService } from './../../services/alertify.service';
@@ -17,15 +18,20 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     public authenticationService: AuthenticationService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
 
   public login(): void {
     this.authenticationService.login(this.loginParameters).subscribe(
-      () => this.alertifyService.success('Logged in successfully'),
-      () => this.alertifyService.error('Failed to login')
+      (next) => {
+        this.alertifyService.success('Logged in successfully');
+        console.log(next);
+      },
+      (error) => this.alertifyService.error(`Failed to login, error ${error}`),
+      () => this.router.navigate(['/members'])
     );
   }
 
@@ -36,5 +42,6 @@ export class NavbarComponent implements OnInit {
   public logout(): void {
     localStorage.removeItem('token');
     this.alertifyService.message('Logged out');
+    this.router.navigate(['/home']);
   }
 }

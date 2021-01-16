@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt/lib/jwthelper.service';
+import { environment } from './../environments/environment';
 import { AuthenticationService } from './services/authentication.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { AuthenticationService } from './services/authentication.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public title = 'Crizzl';
+  public title = environment.appTitle;
   public jwtHelper = new JwtHelperService();
 
   constructor(private authenticationService: AuthenticationService) {}

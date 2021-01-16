@@ -1,3 +1,5 @@
+import { IPhoto } from './photo';
+
 export interface IUser {
   username: string;
   email: string;
@@ -10,4 +12,5 @@ export interface IUser {
   city: string;
   country: string;
   mainPhotoURL: string;
+  photos?: IPhoto[];
 }
