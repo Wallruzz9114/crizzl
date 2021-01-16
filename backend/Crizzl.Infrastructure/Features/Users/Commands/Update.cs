@@ -34,6 +34,9 @@ namespace Crizzl.Infrastructure.Features.Users.Commands
             {
                 var user = await _databaseContext.Users.SingleOrDefaultAsync(x => x.Username == _userService.GetCurrentUsername(), cancellationToken: cancellationToken);
 
+                if (user.Username != _userService.GetCurrentUsername())
+                    throw new Exception($"User { user.Username } is unauthorized to update profile");
+
                 user.Bio = command.Bio ?? user.Bio;
                 user.DatingTarget = command.DatingTarget ?? user.Bio;
                 user.Interests = command.Interests ?? user.Bio;

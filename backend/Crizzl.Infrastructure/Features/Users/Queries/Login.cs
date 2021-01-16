@@ -50,7 +50,7 @@ namespace Crizzl.Infrastructure.Features.Users.Queries
 
                 var correctPassword = _authenticationService.CorrectPassword(query.Password, user.PasswordHash, user.PasswordSalt);
 
-                if (!correctPassword) return null;
+                if (!correctPassword) throw new Exception($"Password for user { user.Username } is incorrect");
 
                 var authenticationResponse = new AuthenticationResponse
                 {

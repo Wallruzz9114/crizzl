@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertifyService } from './../../services/alertify.service';
 import { AuthenticationService } from './../../services/authentication.service';
 
 @Component({
@@ -9,15 +10,32 @@ import { AuthenticationService } from './../../services/authentication.service';
 export class NavbarComponent implements OnInit {
   public loginParameters: any = {};
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private alertifyService: AlertifyService
+  ) {}
 
   ngOnInit(): void {}
 
-  public login() {
+  public login(): void {
     this.authenticationService.login(this.loginParameters).subscribe(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      (_) => console.log('Logged in successfully!'),
-      (error) => console.log(`Failed to login ${error}`)
+      (response) => {
+        if (response) {
+          localStorage.setItem('token', response.token);
+          this.alertifyService.success('Logged in successfully');
+        }
+      },
+      () => this.alertifyService.error('Failed to login')
     );
+  }
+
+  public isLoggedIn(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token;
+  }
+
+  public logout(): void {
+    localStorage.removeItem('token');
+    this.alertifyService.message('Logged out');
   }
 }

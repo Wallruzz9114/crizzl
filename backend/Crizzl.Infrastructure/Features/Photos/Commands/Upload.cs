@@ -40,6 +40,9 @@ namespace Crizzl.Infrastructure.Features.Photos.Commands
                 var fileUpload = _fileService.UploadImage(command.File);
                 var user = await _databaseContext.Users.SingleOrDefaultAsync(x => x.Username == _userService.GetCurrentUsername(), cancellationToken: cancellationToken);
 
+                if (user.Username != _userService.GetCurrentUsername())
+                    throw new Exception($"User { user.Username } is unauthorized");
+
                 var photo = new Photo
                 {
                     PublicId = fileUpload.PublicId,

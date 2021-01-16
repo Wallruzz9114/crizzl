@@ -30,6 +30,10 @@ namespace Crizzl.Infrastructure.Features.Photos.Commands
             public async Task<Unit> Handle(Command command, CancellationToken cancellationToken)
             {
                 var user = await _databaseContext.Users.SingleOrDefaultAsync(x => x.Username == _userService.GetCurrentUsername(), cancellationToken: cancellationToken);
+
+                if (user.Username != _userService.GetCurrentUsername())
+                    throw new Exception($"User { user.Username } is unauthorized");
+
                 var photo = user.Photos.FirstOrDefault(x => x.Id == command.Id);
 
                 if (photo == null) throw new Exception($"Couldn't find photo with id: { command.Id }");

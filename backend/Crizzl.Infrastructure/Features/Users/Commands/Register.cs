@@ -32,7 +32,7 @@ namespace Crizzl.Infrastructure.Features.Users.Commands
             {
                 RuleFor(x => x.Username).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
-                RuleFor(x => x.Password).Password();
+                RuleFor(x => x.Password).NotEmpty().Password();
                 RuleFor(x => x.Gender).NotEmpty();
                 RuleFor(x => x.Alias).NotEmpty();
                 RuleFor(x => x.DateOfBirth).NotEmpty();
@@ -86,7 +86,7 @@ namespace Crizzl.Infrastructure.Features.Users.Commands
                     return userToReturn;
                 }
 
-                throw new Exception("Problem while registering user");
+                throw new Exception("Problem while registering new user");
             }
         }
     }

@@ -4,13 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { AuthenticationService } from './services/authentication.service';
+import { RegisterComponent } from './components/register/register.component';
+import { ErrorInterceptorProvider } from './interceptors/error.interceptor';
+import { AlertifyService } from './services/alertify.service';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent],
+  declarations: [AppComponent, NavbarComponent, HomeComponent, RegisterComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
-  providers: [AuthenticationService],
+  providers: [ErrorInterceptorProvider, AlertifyService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

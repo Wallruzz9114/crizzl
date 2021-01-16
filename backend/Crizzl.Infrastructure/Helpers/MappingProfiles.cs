@@ -20,7 +20,6 @@ namespace Crizzl.Infrastructure.Helpers
                 .ForMember(dest => dest.MainPhotoURL, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).URL));
 
             CreateMap<Photo, PhotoDetails>();
-            CreateMap<Photo, PhotoDetails>();
             CreateMap<FileParameters, Photo>();
         }
     }
