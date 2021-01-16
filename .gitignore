@@ -43,6 +43,7 @@ frontend/ssl
 frontend/.eslintrc
 frontend/.eslintignore
 frontend/.prettierrc
+frontend/.editorconfig
 
 frontend/npm-debug.log*
 frontend/yarn-debug.log*

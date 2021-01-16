@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt/lib/jwthelper.service';
+import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { AlertifyService } from './../../services/alertify.service';
 import { AuthenticationService } from './../../services/authentication.service';
 
@@ -6,12 +8,15 @@ import { AuthenticationService } from './../../services/authentication.service';
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
+  providers: [{ provide: BsDropdownConfig, useValue: { isAnimated: true, autoClose: true } }],
 })
 export class NavbarComponent implements OnInit {
   public loginParameters: any = {};
+  public jwtHelper = new JwtHelperService();
+  public decodedToken: string;
 
   constructor(
-    private authenticationService: AuthenticationService,
+    public authenticationService: AuthenticationService,
     private alertifyService: AlertifyService
   ) {}
 
@@ -19,19 +24,13 @@ export class NavbarComponent implements OnInit {
 
   public login(): void {
     this.authenticationService.login(this.loginParameters).subscribe(
-      (response) => {
-        if (response) {
-          localStorage.setItem('token', response.token);
-          this.alertifyService.success('Logged in successfully');
-        }
-      },
+      () => this.alertifyService.success('Logged in successfully'),
       () => this.alertifyService.error('Failed to login')
     );
   }
 
   public isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
-    return !!token;
+    return this.authenticationService.isLoggedIn();
   }
 
   public logout(): void {
