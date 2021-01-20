@@ -16,10 +16,12 @@
 
     <div *ngIf="this.isLoggedIn()" class="dropdown" dropdown>
       <a class="dropdown-toggle text-light" dropdownToggle>
-        Welcome {{ this.authenticationService.decodedToken?.unique_name | titlecase }}
+        Welcome {{ this.authenticationService.decodedToken?.nameid | titlecase }}
       </a>
       <div class="dropdown-menu mt-3" *dropdownMenu>
-        <a class="dropdown-item" href="#"> <i class="fa fa-user"></i> Edit Profile</a>
+        <a class="dropdown-item" [routerLink]="['/user/edit']">
+          <i class="fa fa-user"></i> Edit Profile</a
+        >
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="this.logout()"> <i class="fa fa-sign-out"></i> Logout</a>
       </div>

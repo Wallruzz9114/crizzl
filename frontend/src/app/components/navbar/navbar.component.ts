@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt/lib/jwthelper.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { AlertifyService } from './../../services/alertify.service';
 import { AuthenticationService } from './../../services/authentication.service';
@@ -14,7 +14,6 @@ import { AuthenticationService } from './../../services/authentication.service';
 export class NavbarComponent implements OnInit {
   public loginParameters: any = {};
   public jwtHelper = new JwtHelperService();
-  public decodedToken: string;
 
   constructor(
     public authenticationService: AuthenticationService,
@@ -30,7 +29,10 @@ export class NavbarComponent implements OnInit {
         this.alertifyService.success('Logged in successfully');
         console.log(next);
       },
-      (error) => this.alertifyService.error(`Failed to login, error ${error}`),
+      (error) => {
+        this.alertifyService.error('Failed to login');
+        console.log(error);
+      },
       () => this.router.navigate(['/members'])
     );
   }

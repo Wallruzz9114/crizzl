@@ -19,6 +19,8 @@ namespace Crizzl.Infrastructure.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.GetAge()))
                 .ForMember(dest => dest.MainPhotoURL, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).URL));
 
+            CreateMap<UserDetailsDTO, User>();
+
             CreateMap<Photo, PhotoDetails>();
             CreateMap<FileParameters, Photo>();
         }

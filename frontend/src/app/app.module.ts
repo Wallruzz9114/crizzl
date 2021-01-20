@@ -5,19 +5,30 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { ListsComponent } from './components/lists/lists.component';
-import { MemberCardComponent } from './components/members/member-card/member-card.component';
-import { MemberListComponent } from './components/members/member-list/member-list.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
+import { UserCardComponent } from './components/users/user-card/user-card.component';
+import { UserDetailsComponent } from './components/users/user-details/user-details.component';
+import { UserEditComponent } from './components/users/user-edit/user-edit.component';
+import { UserListComponent } from './components/users/user-list/user-list.component';
+import { AuthenticationGuard } from './guards/authentication.guard';
+import { PreventUnsavedChanges } from './guards/prevent-unsaved-changes.guard';
 import { ErrorInterceptorProvider } from './interceptors/error.interceptor';
+import { UserDetailsResolver } from './resolvers/user-details.resolver';
+import { UserEditResolver } from './resolvers/user-edit.resolver';
+import { UserListResolver } from './resolvers/user-list.resolver';
 import { routes } from './routes';
 import { AlertifyService } from './services/alertify.service';
+import { AuthenticationService } from './services/authentication.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -25,10 +36,12 @@ import { AlertifyService } from './services/alertify.service';
     NavbarComponent,
     HomeComponent,
     RegisterComponent,
-    MemberListComponent,
-    MemberCardComponent,
+    UserListComponent,
+    UserCardComponent,
     MessagesComponent,
     ListsComponent,
+    UserDetailsComponent,
+    UserEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +49,9 @@ import { AlertifyService } from './services/alertify.service';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    NgxGalleryModule,
     BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
     RouterModule.forRoot(routes),
     JwtModule.forRoot({
       config: {
@@ -46,7 +61,17 @@ import { AlertifyService } from './services/alertify.service';
       },
     }),
   ],
-  providers: [ErrorInterceptorProvider, AlertifyService],
+  providers: [
+    ErrorInterceptorProvider,
+    AlertifyService,
+    AuthenticationService,
+    AuthenticationGuard,
+    PreventUnsavedChanges,
+    UserService,
+    UserDetailsResolver,
+    UserListResolver,
+    UserEditResolver,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

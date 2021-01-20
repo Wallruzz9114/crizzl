@@ -55,7 +55,7 @@ namespace Crizzl.Infrastructure.Features.Users.Queries
                 var authenticationResponse = new AuthenticationResponse
                 {
                     Token = _authenticationService.CreateToken(user),
-                    User = _mapper.Map<UserDetailsForListDTO>(user)
+                    User = _mapper.Map<UserDetailsDTO>(user)
                 };
 
                 return authenticationResponse;

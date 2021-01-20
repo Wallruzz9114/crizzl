@@ -12,6 +12,7 @@ namespace Crizzl.Infrastructure.Features.Users.Commands
     {
         public class Command : IRequest
         {
+            public string Username { get; set; }
             public string Bio { get; set; }
             public string DatingTarget { get; set; }
             public string Interests { get; set; }
@@ -32,7 +33,7 @@ namespace Crizzl.Infrastructure.Features.Users.Commands
 
             public async Task<Unit> Handle(Command command, CancellationToken cancellationToken)
             {
-                var user = await _databaseContext.Users.SingleOrDefaultAsync(x => x.Username == _userService.GetCurrentUsername(), cancellationToken: cancellationToken);
+                var user = await _databaseContext.Users.SingleOrDefaultAsync(x => x.Username == command.Username, cancellationToken: cancellationToken);
 
                 if (user.Username != _userService.GetCurrentUsername())
                     throw new Exception($"User { user.Username } is unauthorized to update profile");

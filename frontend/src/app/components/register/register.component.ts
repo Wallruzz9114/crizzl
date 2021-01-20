@@ -29,7 +29,10 @@ export class RegisterComponent implements OnInit {
           this.alertifyService.success('Registration successful');
         }
       },
-      (error) => this.alertifyService.error(`${error}`)
+      (error) => {
+        this.alertifyService.error('Problem while registering user');
+        console.log(error);
+      }
     );
   }
 

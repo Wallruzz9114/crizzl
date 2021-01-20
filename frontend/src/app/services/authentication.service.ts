@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt/lib/jwthelper.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from './../../environments/environment';
@@ -19,7 +19,7 @@ export class AuthenticationService {
 
   public login(loginParameters: ILoginParameters): Observable<void> {
     return this.httpClient
-      .post<IAuthenticationResponse>(environment.apiURL + 'users/login', loginParameters)
+      .post<IAuthenticationResponse>(environment.apiURL + 'authentication/login', loginParameters)
       .pipe(
         map((response) => {
           if (response) {
@@ -37,6 +37,9 @@ export class AuthenticationService {
   }
 
   public register(registerParameters: any): Observable<IUser> {
-    return this.httpClient.post<IUser>(environment.apiURL + 'users/register', registerParameters);
+    return this.httpClient.post<IUser>(
+      environment.apiURL + 'authentication/register',
+      registerParameters
+    );
   }
 }

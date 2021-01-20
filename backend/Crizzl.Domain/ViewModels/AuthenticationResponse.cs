@@ -5,6 +5,6 @@ namespace Crizzl.Domain.ViewModels
     public class AuthenticationResponse
     {
         public string Token { get; set; }
-        public UserDetailsForListDTO User { get; set; }
+        public UserDetailsDTO User { get; set; }
     }
 }
