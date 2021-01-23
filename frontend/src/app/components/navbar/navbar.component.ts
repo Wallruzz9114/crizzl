@@ -14,6 +14,7 @@ import { AuthenticationService } from './../../services/authentication.service';
 export class NavbarComponent implements OnInit {
   public loginParameters: any = {};
   public jwtHelper = new JwtHelperService();
+  public photoURL: string;
 
   constructor(
     public authenticationService: AuthenticationService,
@@ -21,7 +22,9 @@ export class NavbarComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authenticationService.currentPhotoURL.subscribe((photoURL) => (this.photoURL = photoURL));
+  }
 
   public login(): void {
     this.authenticationService.login(this.loginParameters).subscribe(
@@ -43,6 +46,9 @@ export class NavbarComponent implements OnInit {
 
   public logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.authenticationService.decodedToken = null;
+    this.authenticationService.currentUser = null;
     this.alertifyService.message('Logged out');
     this.router.navigate(['/home']);
   }

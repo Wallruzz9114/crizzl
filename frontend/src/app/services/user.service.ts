@@ -22,4 +22,12 @@ export class UserService {
   public updateUser(updateParameters: IUpdateParameters): Observable<void> {
     return this.httpClient.put<void>(environment.apiURL + 'users/update', updateParameters);
   }
+
+  public setMainPhoto(id: number): Observable<void> {
+    return this.httpClient.post<void>(environment.apiURL + `photos/setasmain${id}`, {});
+  }
+
+  public deletePhoto(id: number): Observable<void> {
+    return this.httpClient.delete<void>(environment.apiURL + `photos/delete${id}`);
+  }
 }

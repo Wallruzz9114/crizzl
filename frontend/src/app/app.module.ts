@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,7 @@ import { ListsComponent } from './components/lists/lists.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
+import { PhotoEditorComponent } from './components/users/photo-editor/photo-editor.component';
 import { UserCardComponent } from './components/users/user-card/user-card.component';
 import { UserDetailsComponent } from './components/users/user-details/user-details.component';
 import { UserEditComponent } from './components/users/user-edit/user-edit.component';
@@ -42,6 +44,7 @@ import { UserService } from './services/user.service';
     ListsComponent,
     UserDetailsComponent,
     UserEditComponent,
+    PhotoEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import { UserService } from './services/user.service';
     FormsModule,
     BrowserAnimationsModule,
     NgxGalleryModule,
+    FileUploadModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     RouterModule.forRoot(routes),

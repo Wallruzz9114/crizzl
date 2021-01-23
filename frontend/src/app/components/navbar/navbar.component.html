@@ -4,7 +4,7 @@
 
     <ul *ngIf="this.isLoggedIn()" class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/members']">Matches</a>
+        <a class="nav-link" [routerLink]="['/users']">Matches</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/lists']">Lists</a>
@@ -15,9 +15,12 @@
     </ul>
 
     <div *ngIf="this.isLoggedIn()" class="dropdown" dropdown>
-      <a class="dropdown-toggle text-light" dropdownToggle>
-        Welcome {{ this.authenticationService.decodedToken?.nameid | titlecase }}
-      </a>
+      <div class="user-block">
+        <span class="mr-2"><img src="{{ this.photoURL }}" /></span>
+        <a class="dropdown-toggle text-light" dropdownToggle>
+          Welcome {{ this.authenticationService.decodedToken?.nameid | titlecase }}
+        </a>
+      </div>
       <div class="dropdown-menu mt-3" *dropdownMenu>
         <a class="dropdown-item" [routerLink]="['/user/edit']">
           <i class="fa fa-user"></i> Edit Profile</a

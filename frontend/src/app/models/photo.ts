@@ -1,5 +1,5 @@
 export interface IPhoto {
-  i: number;
+  id: number;
   url: string;
   description: string;
   dateAdded: Date;
