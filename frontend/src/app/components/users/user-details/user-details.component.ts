@@ -38,16 +38,6 @@ export class UserDetailsComponent implements OnInit {
     this.galleryImages = this.getImages();
   }
 
-  // public getUser(): void {
-  //   this.userService.get(+this.activatedRoute.snapshot.params['id']).subscribe(
-  //     (user: IUser) => (this.user = user),
-  //     (error) => {
-  //       this.alertifyService.error('Problem while getting user information');
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-
   public getImages(): NgxGalleryImage[] {
     const imgUrls: NgxGalleryImage[] = [];
 

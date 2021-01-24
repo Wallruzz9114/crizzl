@@ -3,10 +3,12 @@ using Crizzl.Domain.ViewModels;
 using Crizzl.Infrastructure.Features.Photos.Commands;
 using Crizzl.Infrastructure.Features.Photos.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Crizzl.API.Controllers
 {
+    [Authorize]
     public class PhotosController : BaseController
     {
         [HttpGet("{id}")]

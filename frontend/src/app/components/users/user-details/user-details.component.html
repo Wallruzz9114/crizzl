@@ -6,7 +6,7 @@
     <div class="col-sm-4">
       <div class="card">
         <img
-          src="{{ this.user?.mainPhotoURL }}"
+          src="{{ this.user?.mainPhotoURL || '../../../assets/user-default.png' }}"
           alt="{{ this.user?.alias }}"
           class="card-img-top img-thumbnail"
         />
@@ -23,12 +23,12 @@
 
           <div>
             <strong>Last Active:</strong>
-            <p>{{ this.user?.lastActive | date }}</p>
+            <p>{{ this.user?.lastActive | timeago }}</p>
           </div>
 
           <div>
             <strong>Member Since:</strong>
-            <p>{{ this.user?.createdAt | date }}</p>
+            <p>{{ this.user?.createdAt | date: 'mediumDate' }}</p>
           </div>
         </div>
 
@@ -45,19 +45,19 @@
       <div class="tab-panel">
         <tabset class="member-tabset">
           <tab heading="About {{ this.user?.alias }}">
-            <h4>Description</h4>
+            <h4 *ngIf="this.user.bio">Bio</h4>
             <p>{{ this.user?.bio }}</p>
-            <h4>Looking For</h4>
+            <h4 *ngIf="this.user.datingTarget">Looking For</h4>
             <p>{{ this.user?.datingTarget }}</p>
           </tab>
 
           <tab heading="Interests">
-            <h4>Interests</h4>
+            <h4 *ngIf="this.user.interests">Interests</h4>
             <p>{{ this.user?.interests }}</p>
           </tab>
 
           <tab heading="Photos">
-            <h4>Interests</h4>
+            <h4 *ngIf="this.user.photos.length > 0">Images</h4>
             <ngx-gallery
               [options]="this.galleryOptions"
               [images]="this.galleryImages"
@@ -66,7 +66,7 @@
           </tab>
 
           <tab heading="Messages">
-            <h4>Interests</h4>
+            <h4>Messages</h4>
             <p>Messages will go here</p>
           </tab>
         </tabset>

@@ -5,6 +5,7 @@ using Crizzl.Application.Interfaces;
 using Crizzl.Application.Settings;
 using Crizzl.Infrastructure.Contexts;
 using Crizzl.Infrastructure.Features.Users.Commands;
+using Crizzl.Infrastructure.Helpers;
 using Crizzl.Infrastructure.Implementations;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -40,6 +41,7 @@ namespace API.Configuration.Services
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<LogUserActivity>();
 
             services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
 

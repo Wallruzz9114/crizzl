@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from './../../environments/environment';
 import { IAuthenticationResponse } from './../models/authentication-response';
 import { ILoginParameters } from './../models/login-parameters';
+import { IRegisterParameter } from './../models/register-parameters';
 import { IUser } from './../models/user';
 
 @Injectable({
@@ -46,7 +47,7 @@ export class AuthenticationService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  public register(registerParameters: any): Observable<IUser> {
+  public register(registerParameters: IRegisterParameter): Observable<IUser> {
     return this.httpClient.post<IUser>(
       environment.apiURL + 'authentication/register',
       registerParameters

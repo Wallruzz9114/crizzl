@@ -16,7 +16,9 @@
 
     <div *ngIf="this.isLoggedIn()" class="dropdown" dropdown>
       <div class="user-block">
-        <span class="mr-2"><img src="{{ this.photoURL }}" /></span>
+        <span class="mr-2"
+          ><img src="{{ this.photoURL || '../../../assets/user-default.png' }}"
+        /></span>
         <a class="dropdown-toggle text-light" dropdownToggle>
           Welcome {{ this.authenticationService.decodedToken?.nameid | titlecase }}
         </a>
