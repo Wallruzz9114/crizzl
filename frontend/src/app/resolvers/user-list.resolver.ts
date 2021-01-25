@@ -8,6 +8,9 @@ import { UserService } from './../services/user.service';
 
 @Injectable()
 export class UserListResolver implements Resolve<IUser[]> {
+  public pageNumber = 1;
+  public itemsPerPage = 5;
+
   constructor(
     private userService: UserService,
     private router: Router,
@@ -15,7 +18,7 @@ export class UserListResolver implements Resolve<IUser[]> {
   ) {}
 
   public resolve(): Observable<IUser[]> {
-    return this.userService.getAll().pipe(
+    return this.userService.getAll(this.pageNumber.toString(), this.itemsPerPage.toString()).pipe(
       catchError((error) => {
         console.log(error);
         this.alertifyService.error('Problem retrieving data');

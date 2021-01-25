@@ -1,5 +1,8 @@
 using System;
+using Crizzl.Application.Helpers;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Crizzl.Application.Settings
 {
@@ -19,6 +22,18 @@ namespace Crizzl.Application.Settings
             if (dateOfBirth.AddYears(age) > DateTime.Today) age--;
 
             return age;
+        }
+
+        public static void AddPagination(this HttpResponse httpResponse, int currentPage, int itemsPerPage, int totalItems, int totalPages)
+        {
+            var paginatedResult = new PaginatedResult(currentPage, itemsPerPage, totalItems, totalPages);
+            var camelCaseFormatter = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+
+            httpResponse.Headers.Add("Pagination", JsonConvert.SerializeObject(paginatedResult, camelCaseFormatter));
+            httpResponse.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         }
     }
 }
